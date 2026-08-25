@@ -23,7 +23,7 @@ function HighlightedSummary({ text }: { text: string }) {
 
 export default function Hero() {
   return (
-    <section className="bg-grid-pattern relative flex min-h-screen items-center overflow-hidden px-6 py-24 sm:px-10 lg:px-16">
+    <section className="bg-grid-pattern relative flex min-h-[85vh] items-center overflow-hidden px-6 py-20 sm:px-10 lg:px-16">
       <div
         aria-hidden
         className="pointer-events-none absolute top-1/2 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-3xl"
@@ -31,7 +31,7 @@ export default function Hero() {
 
       <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[3fr_2fr] lg:gap-16">
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <p className="font-mono text-sm text-accent">// Olá, eu sou</p>
+          <p className="font-mono text-sm text-accent">{"// Olá, eu sou"}</p>
 
           <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             {profile.name}
