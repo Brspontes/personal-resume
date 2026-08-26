@@ -4,6 +4,11 @@ export interface Highlight {
   label: string;
 }
 
+export interface ExperiencePosition {
+  role: string;
+  period: string;
+}
+
 export interface ExperienceEntry {
   company: string;
   role: string;
@@ -14,6 +19,7 @@ export interface ExperienceEntry {
   responsibilities: string[];
   technologies?: string[];
   logo?: string;
+  positions?: ExperiencePosition[];
 }
 
 export interface Profile {
@@ -29,11 +35,11 @@ export interface Profile {
 
 export const profile: Profile = {
   name: "Brian Pontes",
-  role: "Senior Backend Engineer",
+  role: "Tech Lead",
   headline: "Full Stack Developer",
   location: "Sorocaba, São Paulo, Brasil",
   summary:
-    "Engenheiro de software com mais de 10 anos de experiência em Backend e Frontend, atualmente atuando como Senior Backend Engineer. Trabalho com Node.js, TypeScript, C# (.NET) e Kotlin, sempre buscando entender a teoria por trás da prática e crescer tecnicamente.",
+    "Engenheiro de software com mais de 10 anos de experiência em Backend e Frontend, atualmente atuando como Tech Lead. Trabalho com Node.js, TypeScript, C# (.NET) e Kotlin, sempre buscando entender a teoria por trás da prática e crescer tecnicamente.",
   techStack: ["Node.js", "TypeScript", "React", ".NET", "Kotlin"],
   highlights: [
     { value: 10, suffix: "+", label: "Anos de Experiência" },
@@ -44,11 +50,18 @@ export const profile: Profile = {
   experiences: [
     {
       company: "Caju",
-      role: "Senior Backend Engineer",
+      role: "Tech Lead",
       period: "Setembro de 2024 — Atual",
       location: "São Paulo, Brasil",
       current: true,
       logo: "/logos/caju.svg",
+      positions: [
+        { role: "Tech Lead", period: "Agosto de 2026 — Atual" },
+        {
+          role: "Senior Backend Engineer",
+          period: "Setembro de 2024 — Agosto de 2026",
+        },
+      ],
       description:
         "Atuação em backend com Kotlin, utilizando os frameworks Spring Boot e Micronaut. Aplicação de arquitetura hexagonal, testes unitários e de integração com Kotest, integração com serviços AWS e Kafka para mensageria, monitoramento com Datadog e gestão de bancos MySQL.",
       responsibilities: [

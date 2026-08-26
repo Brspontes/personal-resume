@@ -82,6 +82,21 @@ export default function ExperienceNavigator({
           {selected.location ? ` · ${selected.location}` : ""}
         </p>
 
+        {selected.positions && selected.positions.length > 1 && (
+          <ol className="mt-4 space-y-2 border-l-2 border-zinc-200 pl-4 dark:border-zinc-700">
+            {selected.positions.map((position) => (
+              <li key={`${position.role}-${position.period}`}>
+                <p className="text-sm font-medium text-foreground">
+                  {position.role}
+                </p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                  {position.period}
+                </p>
+              </li>
+            ))}
+          </ol>
+        )}
+
         {selected.description && (
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
             {selected.description}
