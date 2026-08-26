@@ -69,6 +69,12 @@ export const profile: Profile = {
         "Kafka",
         "Datadog",
         "MySQL",
+        "PostgreSQL",
+        "Docker",
+        "Node.js",
+        "TypeScript",
+        "React",
+        "Claude",
       ],
     },
     {
@@ -76,9 +82,9 @@ export const profile: Profile = {
       role: "Tech Consultant | Tech Lead",
       period: "Junho de 2023 — Novembro de 2024",
       location: "Portugal",
-      logo: "/logos/apply.png",
+      logo: "/logos/apply.jpg",
       description:
-        "Desenvolvimento de uma plataforma inovadora de ofertas de trabalho temporário, integrando soluções mobile, backend e frontend. Responsável pelo design arquitetural de sistemas e bancos de dados, aplicando o conceito \"code first\", da concepção à implementação, garantindo escalabilidade e alta performance.",
+        'Desenvolvimento de uma plataforma inovadora de ofertas de trabalho temporário, integrando soluções mobile, backend e frontend. Responsável pelo design arquitetural de sistemas e bancos de dados, aplicando o conceito "code first", da concepção à implementação, garantindo escalabilidade e alta performance.',
       responsibilities: [
         "Desenvolvimento e manutenção de APIs robustas com Node.js e NestJS",
         "Implementação de testes unitários e de integração com Jest",
@@ -166,6 +172,7 @@ export const profile: Profile = {
     {
       company: "Função Sistemas - PÁGINA OFICIAL",
       role: "Mid System Analyst",
+      logo: "/logos/funcao.jpg",
       period: "Setembro de 2020 — Novembro de 2020",
       responsibilities: [
         "Desenvolvimento backend em .NET",
@@ -174,6 +181,7 @@ export const profile: Profile = {
         "Criação de Stored Procedures",
         "Administração de servidores Windows Server 2012",
       ],
+      technologies: [".NET", "ASP.NET", "SQL Server", "Windows Server 2012"],
     },
     {
       company: "Itaú",
@@ -190,10 +198,22 @@ export const profile: Profile = {
         "Evolução de plataformas",
         "Redução de consumo de processamento",
       ],
+      technologies: [
+        ".NET Full Framework",
+        ".NET Core",
+        "ASP",
+        "HTML5",
+        "CSS3",
+        "SQL Server",
+        "Windows Server 2012",
+        "Oracle",
+        "Splunk",
+      ],
     },
     {
       company: "KCMS Intelligent Solutions",
       role: "Jr Developer",
+      logo: "/logos/kcms.png",
       period: "Março de 2017 — Julho de 2017",
       location: "Sorocaba e Região, Brasil",
       responsibilities: [
@@ -201,6 +221,15 @@ export const profile: Profile = {
         "Desenvolvimento frontend com HTML5, CSS3, Bootstrap e jQuery",
         "Administração de banco de dados SQL Server",
         "Uso de nuvem Azure",
+      ],
+      technologies: [
+        ".NET Core",
+        "HTML5",
+        "CSS3",
+        "Bootstrap",
+        "jQuery",
+        "SQL Server",
+        "Azure",
       ],
     },
     {
@@ -214,6 +243,7 @@ export const profile: Profile = {
         "Desenvolvimento com .NET Windows Forms",
         "Administração de banco de dados SQL Server",
       ],
+      technologies: [".NET", "SQL Server"],
     },
   ],
 };
