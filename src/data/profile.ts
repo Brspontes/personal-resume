@@ -31,6 +31,7 @@ export interface Profile {
   techStack: string[];
   highlights: Highlight[];
   experiences: ExperienceEntry[];
+  skills: string[];
 }
 
 export const profile: Profile = {
@@ -258,5 +259,42 @@ export const profile: Profile = {
       ],
       technologies: [".NET", "SQL Server"],
     },
+  ],
+  skills: [
+    "JavaScript",
+    "TypeScript",
+    "C#",
+    "Kotlin",
+    "Node.js",
+    "NestJS",
+    "Spring Boot",
+    "Micronaut",
+    ".NET",
+    "ASP.NET",
+    "Razor",
+    "React",
+    "HTML5",
+    "CSS3",
+    "Bootstrap",
+    "jQuery",
+    "PostgreSQL",
+    "MySQL",
+    "MongoDB",
+    "SQL Server",
+    "Oracle",
+    "AWS",
+    "AWS Lambda",
+    "Azure",
+    "Docker",
+    "Serverless",
+    "Kafka",
+    "Jest",
+    "Kotest",
+    "CI/CD",
+    "Datadog",
+    "Splunk",
+    "Microservices",
+    "Hexagonal Architecture",
+    "Claude",
   ],
 };
