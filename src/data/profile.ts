@@ -22,6 +22,33 @@ export interface ExperienceEntry {
   positions?: ExperiencePosition[];
 }
 
+export interface EducationEntry {
+  degree: string;
+  institution: string;
+  period: string;
+}
+
+export interface CertificationEntry {
+  id: string;
+  name: string;
+  issuer?: string;
+  issuedAt?: string;
+  expiresAt?: string;
+  credentialId?: string;
+  credentialUrl?: string;
+}
+
+export interface ContactChannel {
+  label: string;
+  value: string;
+  href: string;
+}
+
+export interface Contact {
+  email: string;
+  channels: ContactChannel[];
+}
+
 export interface Profile {
   name: string;
   role: string;
@@ -32,6 +59,9 @@ export interface Profile {
   highlights: Highlight[];
   experiences: ExperienceEntry[];
   skills: string[];
+  education: EducationEntry[];
+  certifications: CertificationEntry[];
+  contact: Contact;
 }
 
 export const profile: Profile = {
@@ -41,11 +71,21 @@ export const profile: Profile = {
   location: "Sorocaba, São Paulo, Brasil",
   summary:
     "Engenheiro de software com mais de 10 anos de experiência em Backend e Frontend, atualmente atuando como Tech Lead. Trabalho com Node.js, TypeScript, C# (.NET) e Kotlin, sempre buscando entender a teoria por trás da prática e crescer tecnicamente.",
-  techStack: ["Node.js", "TypeScript", "React", ".NET", "Kotlin"],
+  techStack: [
+    "Node.js",
+    "TypeScript",
+    "React",
+    ".NET",
+    "Kotlin",
+    "NestJS",
+    "Serverless",
+    "Claude",
+    "Microservices",
+  ],
   highlights: [
     { value: 10, suffix: "+", label: "Anos de Experiência" },
     { value: 9, label: "Empresas" },
-    { value: 5, label: "Certificações" },
+    { value: 3, label: "Certificações" },
     { value: 2, label: "Idiomas" },
   ],
   experiences: [
@@ -297,4 +337,58 @@ export const profile: Profile = {
     "Hexagonal Architecture",
     "Claude",
   ],
+  education: [
+    {
+      degree: "MBA Arquitetura de Software e Soluções",
+      institution: "Instituto de Gestão e Tecnologia da Informação",
+      period: "Julho de 2021 — Outubro de 2022",
+    },
+    {
+      degree: "Bacharelado em Ciência da Computação",
+      institution: "Universidade Paulista",
+      period: "2013 — 2016",
+    },
+  ],
+  certifications: [
+    {
+      id: "aws-certified-cloud-practitioner",
+      name: "AWS Certified Cloud Practitioner",
+      issuer: "Amazon Web Services Training and Certification",
+      issuedAt: "Setembro de 2023",
+      expiresAt: "Setembro de 2026",
+      credentialUrl:
+        "https://www.credly.com/badges/dafa55aa-6b8e-4b46-b950-b10c970befa0/linked_in_profile",
+    },
+    {
+      id: "cpa-20",
+      name: "CPA-20",
+      issuer: "ANBIMA",
+      issuedAt: "Julho de 2021",
+      credentialId: "T6M8-D3Q8-M8F2",
+    },
+    {
+      id: "scrum-fundamentals-certified",
+      name: "Scrum Fundamentals Certified (SFC)",
+      issuer: "SCRUMstudy",
+      issuedAt: "Julho de 2020",
+      credentialId: "800050",
+      credentialUrl:
+        "https://www.scrumstudy.com/certification/verify?type=SFC&number=800050",
+    },
+  ],
+  contact: {
+    email: "brian.robert16@hotmail.com",
+    channels: [
+      {
+        label: "LinkedIn",
+        value: "linkedin.com/in/brianpontes-420675a4",
+        href: "https://www.linkedin.com/in/brianpontes-420675a4",
+      },
+      {
+        label: "Website",
+        value: "brianpontes.com.br",
+        href: "https://www.brianpontes.com.br/",
+      },
+    ],
+  },
 };
