@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ProfessionalHighlights from "@/components/ProfessionalHighlights";
 import ProfessionalExperience from "@/components/ProfessionalExperience";
@@ -10,6 +11,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
+      <Header />
       <main>
         <Hero />
         <ProfessionalHighlights />

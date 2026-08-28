@@ -3,7 +3,10 @@ import HighlightCounter from "./HighlightCounter";
 
 export default function ProfessionalHighlights() {
   return (
-    <section className="bg-grid-pattern relative overflow-hidden px-6 pt-8 pb-16 sm:px-10 lg:px-16">
+    <section
+      id="highlights"
+      className="bg-grid-pattern relative overflow-hidden px-6 pt-8 pb-16 sm:px-10 lg:px-16"
+    >
       <div className="relative mx-auto grid w-full max-w-6xl grid-cols-2 gap-8 lg:grid-cols-4">
         {profile.highlights.map((highlight) => (
           <div

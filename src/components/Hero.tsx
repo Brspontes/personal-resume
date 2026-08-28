@@ -23,7 +23,10 @@ function HighlightedSummary({ text }: { text: string }) {
 
 export default function Hero() {
   return (
-    <section className="bg-grid-pattern relative flex min-h-[85vh] items-center overflow-hidden px-6 py-20 sm:px-10 lg:px-16">
+    <section
+      id="home"
+      className="bg-grid-pattern relative flex min-h-[85vh] items-center overflow-hidden px-6 py-20 sm:px-10 lg:px-16"
+    >
       <div
         aria-hidden
         className="pointer-events-none absolute top-1/2 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-3xl"
