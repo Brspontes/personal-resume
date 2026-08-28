@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { profile } from "@/data/profile";
 
 const SUMMARY_KEYWORDS = ["Node.js", "TypeScript", "C# (.NET)", "Kotlin"];
@@ -80,20 +81,20 @@ export default function Hero() {
 
         <div className="relative mx-auto aspect-square w-full max-w-sm">
           <div
-            className="flex h-full w-full items-center justify-center border border-accent/30 bg-gradient-to-br from-accent/15 to-transparent"
+            className="relative h-full w-full overflow-hidden border border-accent/30 bg-gradient-to-br from-accent/15 to-transparent"
             style={{
               clipPath:
                 "polygon(20% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%, 0% 20%)",
             }}
           >
-            <span className="font-mono text-6xl font-semibold text-accent/70">
-              {profile.name
-                .split(" ")
-                .map((part) => part[0])
-                .join("")
-                .slice(0, 2)
-                .toUpperCase()}
-            </span>
+            <Image
+              src="/profile.jpg"
+              alt={profile.name}
+              fill
+              sizes="(min-width: 1024px) 24rem, 80vw"
+              className="object-cover"
+              priority
+            />
           </div>
           <div className="absolute -bottom-4 -left-4 flex h-14 w-14 items-center justify-center rounded-xl bg-accent font-mono text-lg font-semibold text-white shadow-lg">
             {"</>"}
