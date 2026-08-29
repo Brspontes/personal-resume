@@ -13,8 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Personal Resume",
+  title: "Brian Pontes",
   description: "Personal resume and professional portfolio",
+  icons: {
+    icon: "/code.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
