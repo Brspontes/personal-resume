@@ -1,6 +1,16 @@
 # Personal Resume
 
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Node](https://img.shields.io/badge/node-24.19.0-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Vercel Deploy](https://img.shields.io/github/deployments/Brspontes/personal-resume/production?label=vercel&logo=vercel&logoColor=white)](https://brianpontes.dev)
+[![Last commit](https://img.shields.io/github/last-commit/Brspontes/personal-resume?logo=github)](https://github.com/Brspontes/personal-resume/commits/master)
+
 Personal resume and professional portfolio website, built to present professional experience, skills, and career history in a modern, developer-styled web interface.
+
+**Live:** [brianpontes.dev](https://brianpontes.dev)
 
 ## Tech Stack
 
