@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://brianpontes.dev"),
   title: "Brian Pontes",
   description: "Personal resume and professional portfolio",
   icons: {

@@ -1,7 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useActiveSection } from "@/hooks/useActiveSection";
+
+type NavLink = { label: string; href: string; kind: "hash" | "route" };
 
 function linkClasses(isActive: boolean) {
   return `block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-zinc-100 hover:text-accent focus-visible:bg-zinc-100 focus-visible:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:hover:bg-zinc-900 ${
@@ -9,13 +13,14 @@ function linkClasses(isActive: boolean) {
   }`;
 }
 
-export default function MobileNav({
-  links,
-}: {
-  links: { label: string; href: string }[];
-}) {
+export default function MobileNav({ links }: { links: NavLink[] }) {
   const [isOpen, setIsOpen] = useState(false);
-  const ids = useMemo(() => links.map((link) => link.href.slice(1)), [links]);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const ids = useMemo(
+    () => links.filter((link) => link.kind === "hash").map((link) => link.href.slice(1)),
+    [links],
+  );
   const [activeId, setActiveId] = useActiveSection(ids);
 
   return (
@@ -49,17 +54,37 @@ export default function MobileNav({
         >
           <ul className="flex flex-col gap-1">
             {links.map((link) => {
+              if (link.kind === "route") {
+                const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      aria-current={isActive ? "true" : undefined}
+                      className={linkClasses(isActive)}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              }
+
               const id = link.href.slice(1);
-              const isActive = activeId === id;
+              const isActive = isHome && activeId === id;
 
               return (
                 <li key={link.href}>
+                  {/* Always prefix with "/": on the homepage this is a same-document
+                      fragment navigation (native smooth scroll), and from any other
+                      route it navigates home and resolves the fragment on load. */}
                   <a
-                    href={link.href}
+                    href={`/${link.href}`}
                     aria-current={isActive ? "true" : undefined}
                     className={linkClasses(isActive)}
                     onClick={() => {
-                      setActiveId(id);
+                      if (isHome) setActiveId(id);
                       setIsOpen(false);
                     }}
                   >
