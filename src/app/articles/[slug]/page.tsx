@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ArticleBody from "@/components/ArticleBody";
+import ArticleReactions from "@/components/ArticleReactions";
 import { urlForImage } from "@/lib/sanity/image";
 import { getArticleBySlug } from "@/lib/sanity/queries";
 import { formatArticleDate, formatReadingTime } from "@/lib/format";
@@ -114,6 +115,8 @@ export default async function ArticlePage({ params }: PageProps<"/articles/[slug
             ))}
           </ul>
         )}
+
+        <ArticleReactions articleId={article._id} articleSlug={article.slug} />
 
         <div className="mt-10">
           <Link

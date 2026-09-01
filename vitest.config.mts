@@ -8,6 +8,9 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
     exclude: ["**/node_modules/**", "**/.next/**"],
+    // Clears mock.calls/mock.results before each test so call-count
+    // assertions can't leak between tests in the same file.
+    clearMocks: true,
   },
   resolve: {
     alias: {
