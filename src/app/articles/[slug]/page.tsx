@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ArticleAnalytics from "@/components/ArticleAnalytics";
 import ArticleBody from "@/components/ArticleBody";
 import ArticleReactions from "@/components/ArticleReactions";
 import ArticleComments from "@/components/ArticleComments";
@@ -100,9 +101,11 @@ export default async function ArticlePage({ params }: PageProps<"/articles/[slug
           </div>
         )}
 
-        <div className="mt-8">
+        <div id="article-content" className="mt-8">
           <ArticleBody value={article.body} />
         </div>
+
+        <ArticleAnalytics articleId={article._id} />
 
         {article.tags && article.tags.length > 0 && (
           <ul className="mt-10 flex flex-wrap gap-2 border-t border-zinc-300 pt-6 dark:border-zinc-700">
