@@ -30,6 +30,11 @@ export async function getPublishedArticles(): Promise<ArticleSummary[]> {
   return sanityFetch<ArticleSummary[]>(query, {}, []);
 }
 
+export async function getLatestArticles(limit: number): Promise<ArticleSummary[]> {
+  const query = `*[${PUBLISHED_FILTER}] | order(publishedAt desc) [0...$limit] ${ARTICLE_SUMMARY_PROJECTION}`;
+  return sanityFetch<ArticleSummary[]>(query, { limit }, []);
+}
+
 export async function getFeaturedArticles(): Promise<ArticleSummary[]> {
   const query = `*[${PUBLISHED_FILTER} && featured == true] | order(publishedAt desc) ${ARTICLE_SUMMARY_PROJECTION}`;
   return sanityFetch<ArticleSummary[]>(query, {}, []);
