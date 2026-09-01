@@ -85,11 +85,17 @@ export function useArticleAnalytics(articleId: string): void {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    // `visibilitychange` does not fire before a plain reload (F5) in every
+    // browser, so `pagehide` is a second, overlapping trigger for the same
+    // guarded `sendReadEvent` - it is the reliable "page is being torn down"
+    // signal `sendArticleReadBeacon`'s `navigator.sendBeacon` path is built for.
+    window.addEventListener("pagehide", sendReadEvent);
     calculateProgress();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", sendReadEvent);
       if (scrollFrame !== null) {
         cancelAnimationFrame(scrollFrame);
       }

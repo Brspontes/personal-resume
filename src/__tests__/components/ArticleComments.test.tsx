@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import ArticleComments from "@/components/ArticleComments";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { markPendingLoginCheck, useCurrentUser } from "@/hooks/useCurrentUser";
 import { useArticleComments } from "@/hooks/useArticleComments";
 import { useCreateComment, useDeleteComment, useUpdateComment } from "@/hooks/useCommentMutations";
 import type { Comment } from "@/lib/comments/types";
@@ -11,6 +11,7 @@ vi.mock("@/hooks/useArticleComments");
 vi.mock("@/hooks/useCommentMutations");
 
 const mockedUseCurrentUser = vi.mocked(useCurrentUser);
+const mockedMarkPendingLoginCheck = vi.mocked(markPendingLoginCheck);
 const mockedUseArticleComments = vi.mocked(useArticleComments);
 const mockedUseCreateComment = vi.mocked(useCreateComment);
 const mockedUseUpdateComment = vi.mocked(useUpdateComment);
@@ -104,6 +105,9 @@ describe("ArticleComments", () => {
     expect(screen.queryByLabelText("Escreva um comentário...")).not.toBeInTheDocument();
     const loginLink = screen.getByRole("link", { name: "Faça login com o LinkedIn" });
     expect(loginLink).toHaveAttribute("href", "http://localhost:9999/login?returnTo=/articles/some-slug");
+
+    fireEvent.click(loginLink);
+    expect(mockedMarkPendingLoginCheck).toHaveBeenCalledTimes(1);
   });
 
   it("keeps only one reply form open at a time across multiple comments", () => {

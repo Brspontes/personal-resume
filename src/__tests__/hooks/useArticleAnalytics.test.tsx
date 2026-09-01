@@ -153,6 +153,23 @@ describe("useArticleAnalytics", () => {
     expect(sendArticleReadBeacon).toHaveBeenCalledWith("article-1", "session-1", 8, 25);
   });
 
+  it("sends ARTICLE_READ on a pagehide event (covers a plain reload/close, where visibilitychange does not reliably fire), and does not send it again on unmount", () => {
+    const dateNowSpy = vi.spyOn(Date, "now").mockReturnValue(0);
+    const { unmount } = renderHook(() => useArticleAnalytics("article-1"));
+
+    act(() => scrollTo(500)); // 50%
+
+    dateNowSpy.mockReturnValue(6_000); // 6s visible
+    act(() => window.dispatchEvent(new Event("pagehide")));
+
+    expect(sendArticleReadBeacon).toHaveBeenCalledTimes(1);
+    expect(sendArticleReadBeacon).toHaveBeenCalledWith("article-1", "session-1", 6, 50);
+
+    unmount();
+
+    expect(sendArticleReadBeacon).toHaveBeenCalledTimes(1);
+  });
+
   it("resets progress and timing state when articleId changes, unaffected by the previous article's state", () => {
     const dateNowSpy = vi.spyOn(Date, "now").mockReturnValue(0);
     const { rerender, unmount } = renderHook(

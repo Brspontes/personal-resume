@@ -4,19 +4,57 @@ import type { RecordAnalyticsEvent } from "./types";
 const SESSION_ID_STORAGE_KEY = "analytics_session_id";
 const ANALYTICS_EVENTS_PATH = "/api/v1/analytics/events";
 
+interface StoredSession {
+  id: string;
+  date: string;
+}
+
 function isConfigured(): boolean {
   return Boolean(reactionsApiBaseUrl);
 }
 
-export function getOrCreateSessionId(): string {
+// Visitor's local calendar day (not UTC), so the session rotates at the
+// same midnight the visitor experiences.
+function todayDateString(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function readStoredSession(raw: string): StoredSession | null {
   try {
-    const existing = window.localStorage.getItem(SESSION_ID_STORAGE_KEY);
-    if (existing) {
-      return existing;
+    const parsed: unknown = JSON.parse(raw);
+    if (
+      parsed !== null &&
+      typeof parsed === "object" &&
+      typeof (parsed as StoredSession).id === "string" &&
+      typeof (parsed as StoredSession).date === "string"
+    ) {
+      return parsed as StoredSession;
+    }
+  } catch {
+    // Corrupted or legacy (pre-daily-rotation) value - treated as absent.
+  }
+  return null;
+}
+
+export function getOrCreateSessionId(): string {
+  const today = todayDateString();
+
+  try {
+    const raw = window.localStorage.getItem(SESSION_ID_STORAGE_KEY);
+    const stored = raw ? readStoredSession(raw) : null;
+    if (stored && stored.date === today) {
+      return stored.id;
     }
 
     const generated = crypto.randomUUID();
-    window.localStorage.setItem(SESSION_ID_STORAGE_KEY, generated);
+    window.localStorage.setItem(
+      SESSION_ID_STORAGE_KEY,
+      JSON.stringify({ id: generated, date: today } satisfies StoredSession),
+    );
     return generated;
   } catch {
     // localStorage unavailable (disabled or strict privacy mode) - fall back

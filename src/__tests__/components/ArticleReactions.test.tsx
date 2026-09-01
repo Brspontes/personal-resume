@@ -1,13 +1,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import ArticleReactions from "@/components/ArticleReactions";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { markPendingLoginCheck, useCurrentUser } from "@/hooks/useCurrentUser";
 import { useArticleReactions } from "@/hooks/useArticleReactions";
 
 vi.mock("@/hooks/useCurrentUser");
 vi.mock("@/hooks/useArticleReactions");
 
 const mockedUseCurrentUser = vi.mocked(useCurrentUser);
+const mockedMarkPendingLoginCheck = vi.mocked(markPendingLoginCheck);
 const mockedUseArticleReactions = vi.mocked(useArticleReactions);
 
 const loginUrl = vi.fn((returnTo: string) => `http://localhost:9999/api/v1/auth/linkedin?returnTo=${returnTo}`);
@@ -114,6 +115,7 @@ describe("ArticleReactions", () => {
     expect(window.location.href).toBe(
       "http://localhost:9999/api/v1/auth/linkedin?returnTo=/articles/some-slug",
     );
+    expect(mockedMarkPendingLoginCheck).toHaveBeenCalledTimes(1);
   });
 
   it("disables the controls while a reaction request is in flight, preventing a duplicate request", () => {

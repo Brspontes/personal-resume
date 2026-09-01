@@ -1,7 +1,7 @@
 "use client";
 
 import { FaRegThumbsDown, FaRegThumbsUp, FaThumbsDown, FaThumbsUp } from "react-icons/fa";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { markPendingLoginCheck, useCurrentUser } from "@/hooks/useCurrentUser";
 import { useArticleReactions } from "@/hooks/useArticleReactions";
 import type { ReactionType } from "@/lib/reactions/types";
 
@@ -33,6 +33,7 @@ export default function ArticleReactions({
 
   function handleReact(type: ReactionType) {
     if (status === "unauthenticated") {
+      markPendingLoginCheck();
       window.location.href = getLoginUrl(`/articles/${articleSlug}`);
       return;
     }

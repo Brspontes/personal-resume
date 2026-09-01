@@ -7,15 +7,19 @@ The article analytics capability measures how visitors consume published article
 ## Requirements
 
 ### Requirement: Anonymous Analytics Session
-The frontend SHALL generate an anonymous analytics session identifier, stable across the visitor's browsing, that contains no personally identifiable information and is never derived from the visitor's LinkedIn identity.
+The frontend SHALL generate an anonymous analytics session identifier, stable for the visitor's current calendar day, that contains no personally identifiable information and is never derived from the visitor's LinkedIn identity.
 
 #### Scenario: Visitor has no existing analytics session
 - **WHEN** a visitor without an existing analytics session identifier opens an article
 - **THEN** the frontend generates a new opaque session identifier and reuses it for subsequent analytics events
 
-#### Scenario: Visitor already has an analytics session
-- **WHEN** a visitor with an existing analytics session identifier opens another article
+#### Scenario: Visitor already has an analytics session from today
+- **WHEN** a visitor with an existing analytics session identifier created earlier the same calendar day opens another article, or reloads the page
 - **THEN** the frontend reuses the existing identifier rather than generating a new one
+
+#### Scenario: Visitor's existing analytics session is from a previous day
+- **WHEN** a visitor opens an article and the stored analytics session identifier was created on a previous calendar day
+- **THEN** the frontend generates a new opaque session identifier and reuses it for subsequent analytics events
 
 ### Requirement: Analytics Independent of Authentication
 Analytics tracking SHALL function identically for authenticated and unauthenticated visitors, and SHALL NOT require or trigger LinkedIn authentication.
@@ -63,6 +67,10 @@ When the visitor leaves the article (navigates away, closes the tab, or moves to
 #### Scenario: Visitor navigates away from an article
 - **WHEN** a visitor who has been reading an article leaves it
 - **THEN** the frontend sends an `ARTICLE_READ` event with the accumulated active reading duration and the highest progress percentage reached during that reading session
+
+#### Scenario: Visitor reloads or closes the tab
+- **WHEN** a visitor reloads the page or closes the tab while reading an article
+- **THEN** the frontend still sends the `ARTICLE_READ` event for that reading session, even though the browser does not reliably report the tab as hidden before this kind of departure
 
 ### Requirement: Tracking State Resets Between Articles
 When the visitor navigates from one article directly to another without a full page reload, the frontend SHALL send the completion event for the article being left and SHALL start fresh progress and timing state for the newly opened article.

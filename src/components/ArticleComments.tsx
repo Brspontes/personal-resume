@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { markPendingLoginCheck, useCurrentUser } from "@/hooks/useCurrentUser";
 import { useArticleComments } from "@/hooks/useArticleComments";
 import { useCreateComment } from "@/hooks/useCommentMutations";
 import CommentForm from "./CommentForm";
@@ -55,6 +55,7 @@ export default function ArticleComments({
           <p className="text-sm text-zinc-500 dark:text-zinc-500">
             <a
               href={getLoginUrl(`/articles/${articleSlug}`)}
+              onClick={markPendingLoginCheck}
               className="font-medium text-accent transition-opacity hover:opacity-80"
             >
               Faça login com o LinkedIn
