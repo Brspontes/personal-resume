@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ArticleCard from "@/components/ArticleCard";
+import BackendWarmup from "@/components/BackendWarmup";
 import { getPublishedArticles } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export default async function ArticlesPage() {
 
   return (
     <section className="bg-grid-pattern relative overflow-hidden px-6 py-16 sm:px-10 lg:px-16">
+      <BackendWarmup />
       <div className="relative mx-auto w-full max-w-6xl">
         <p className="font-mono text-sm text-accent">{"// Conteúdo"}</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
