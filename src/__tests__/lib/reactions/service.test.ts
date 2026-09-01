@@ -12,7 +12,7 @@ async function loadService(options: { configured: boolean; get?: ReturnType<type
   const get = options.get ?? vi.fn();
   const post = options.post ?? vi.fn();
 
-  vi.doMock("@/lib/reactions/http", () => ({
+  vi.doMock("@/lib/backend/http", () => ({
     http: { get, post },
     reactionsApiBaseUrl: options.configured ? "http://localhost:9999" : undefined,
   }));

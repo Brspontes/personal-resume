@@ -1,5 +1,5 @@
 import axios from "axios";
-import { http, reactionsApiBaseUrl } from "./http";
+import { http, reactionsApiBaseUrl } from "@/lib/backend/http";
 import type { CurrentUser, ReactionSummary, ReactionType } from "./types";
 
 const EMPTY_SUMMARY: ReactionSummary = { likes: 0, dislikes: 0, userReaction: null };
