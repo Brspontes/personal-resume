@@ -3,15 +3,18 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import CommentItem from "@/components/CommentItem";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useCreateComment, useDeleteComment, useUpdateComment } from "@/hooks/useCommentMutations";
+import { useCommentReaction } from "@/hooks/useCommentReaction";
 import type { Comment } from "@/lib/comments/types";
 
 vi.mock("@/hooks/useCurrentUser");
 vi.mock("@/hooks/useCommentMutations");
+vi.mock("@/hooks/useCommentReaction");
 
 const mockedUseCurrentUser = vi.mocked(useCurrentUser);
 const mockedUseCreateComment = vi.mocked(useCreateComment);
 const mockedUseUpdateComment = vi.mocked(useUpdateComment);
 const mockedUseDeleteComment = vi.mocked(useDeleteComment);
+const mockedUseCommentReaction = vi.mocked(useCommentReaction);
 
 const loginUrl = vi.fn((returnTo: string) => `http://localhost:9999/login?returnTo=${returnTo}`);
 
@@ -48,8 +51,21 @@ function baseComment(overrides: Partial<Comment> = {}): Comment {
     updatedAt: "2026-01-01T12:00:00.000Z",
     deletedAt: null,
     replies: [],
+    likes: 0,
+    dislikes: 0,
+    userReaction: null,
     ...overrides,
   };
+}
+
+function mockReaction(overrides: Partial<ReturnType<typeof useCommentReaction>> = {}) {
+  mockedUseCommentReaction.mockReturnValue({
+    react: vi.fn(),
+    remove: vi.fn(),
+    isReacting: false,
+    reactionError: null,
+    ...overrides,
+  });
 }
 
 const defaultProps = {
@@ -69,6 +85,7 @@ describe("CommentItem", () => {
     mockedUseCreateComment.mockReturnValue(baseMutation<ReturnType<typeof useCreateComment>>());
     mockedUseUpdateComment.mockReturnValue(baseMutation<ReturnType<typeof useUpdateComment>>());
     mockedUseDeleteComment.mockReturnValue(baseMutation<ReturnType<typeof useDeleteComment>>());
+    mockReaction();
 
     originalLocation = window.location;
     Object.defineProperty(window, "location", { writable: true, value: { href: "" } });
@@ -191,6 +208,26 @@ describe("CommentItem", () => {
     fireEvent.click(screen.getByText("Salvar"));
 
     expect(mutateAsync).toHaveBeenCalledWith({ commentId: "c1", content: "Editado!" });
+  });
+
+  it("renders reaction controls for a top-level comment and its reply", () => {
+    const comment = baseComment({
+      replies: [baseComment({ id: "r1", content: "Concordo!", author: { id: "a2", name: "Ana" } })],
+    });
+
+    render(<CommentItem comment={comment} {...defaultProps} />);
+
+    expect(screen.getAllByRole("button", { name: "Curtir comentário" })).toHaveLength(2);
+    expect(screen.getAllByRole("button", { name: "Não curtir comentário" })).toHaveLength(2);
+  });
+
+  it("renders reaction controls for the user's own comment alongside edit and delete", () => {
+    render(<CommentItem comment={baseComment({ isOwner: true })} {...defaultProps} />);
+
+    expect(screen.getByRole("button", { name: "Curtir comentário" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Não curtir comentário" })).toBeInTheDocument();
+    expect(screen.getByText("Editar")).toBeInTheDocument();
+    expect(screen.getByText("Excluir")).toBeInTheDocument();
   });
 
   it("requires confirmation before calling the delete mutation", () => {

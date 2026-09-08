@@ -37,6 +37,9 @@ const baseComment = {
   updatedAt: "2026-01-01T00:00:00.000Z",
   deletedAt: null,
   replies: [],
+  likes: 0,
+  dislikes: 0,
+  userReaction: null,
 };
 
 describe("getComments", () => {
@@ -121,5 +124,50 @@ describe("deleteComment", () => {
     await service.deleteComment("c1");
 
     expect(del).toHaveBeenCalledWith("/api/v1/comments/c1");
+  });
+});
+
+describe("addOrUpdateCommentReaction", () => {
+  it("posts the reaction type and returns the updated summary", async () => {
+    const summary = { likes: 1, dislikes: 0, userReaction: "LIKE" as const };
+    const { service, post } = await loadService({
+      configured: true,
+      post: vi.fn().mockResolvedValue({ data: summary }),
+    });
+
+    await expect(service.addOrUpdateCommentReaction("c1", "LIKE")).resolves.toEqual(summary);
+    expect(post).toHaveBeenCalledWith("/api/v1/comments/c1/reactions", { type: "LIKE" });
+  });
+
+  it("surfaces a failed request to the caller", async () => {
+    const { service } = await loadService({
+      configured: true,
+      post: vi.fn().mockRejectedValue(new Error("validation failed")),
+    });
+
+    await expect(service.addOrUpdateCommentReaction("c1", "LIKE")).rejects.toThrow(
+      "validation failed",
+    );
+  });
+});
+
+describe("removeCommentReaction", () => {
+  it("calls the delete endpoint (the backend responds 204 with no body)", async () => {
+    const { service, delete: del } = await loadService({
+      configured: true,
+      delete: vi.fn().mockResolvedValue({}),
+    });
+
+    await expect(service.removeCommentReaction("c1")).resolves.toBeUndefined();
+    expect(del).toHaveBeenCalledWith("/api/v1/comments/c1/reactions");
+  });
+
+  it("surfaces a failed request to the caller", async () => {
+    const { service } = await loadService({
+      configured: true,
+      delete: vi.fn().mockRejectedValue(new Error("network down")),
+    });
+
+    await expect(service.removeCommentReaction("c1")).rejects.toThrow("network down");
   });
 });

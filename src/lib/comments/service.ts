@@ -1,4 +1,5 @@
 import { http, reactionsApiBaseUrl } from "@/lib/backend/http";
+import type { ReactionSummary, ReactionType } from "@/lib/reactions/types";
 import type { Comment } from "./types";
 
 function isConfigured(): boolean {
@@ -29,4 +30,21 @@ export async function updateComment(commentId: string, content: string): Promise
 
 export async function deleteComment(commentId: string): Promise<void> {
   await http.delete(`/api/v1/comments/${commentId}`);
+}
+
+export async function addOrUpdateCommentReaction(
+  commentId: string,
+  type: ReactionType,
+): Promise<ReactionSummary> {
+  const { data } = await http.post<ReactionSummary>(`/api/v1/comments/${commentId}/reactions`, {
+    type,
+  });
+  return data;
+}
+
+// The backend responds 204 No Content on a successful removal (unlike the
+// create/update endpoint, which returns the fresh summary) - there is no
+// response body to parse here.
+export async function removeCommentReaction(commentId: string): Promise<void> {
+  await http.delete(`/api/v1/comments/${commentId}/reactions`);
 }

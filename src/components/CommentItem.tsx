@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useCreateComment, useDeleteComment, useUpdateComment } from "@/hooks/useCommentMutations";
 import CommentForm from "./CommentForm";
+import CommentReaction from "./CommentReaction";
 import type { Comment } from "@/lib/comments/types";
 
 function formatCommentDate(dateString: string): string {
@@ -125,6 +126,14 @@ export default function CommentItem({
 
       {!isDeleted && (
         <div className="flex flex-wrap items-center gap-4 text-xs">
+          <CommentReaction
+            articleId={articleId}
+            articleSlug={articleSlug}
+            commentId={comment.id}
+            likes={comment.likes}
+            dislikes={comment.dislikes}
+            userReaction={comment.userReaction}
+          />
           {canReply && (
             <button
               type="button"

@@ -4,11 +4,13 @@ import ArticleComments from "@/components/ArticleComments";
 import { markPendingLoginCheck, useCurrentUser } from "@/hooks/useCurrentUser";
 import { useArticleComments } from "@/hooks/useArticleComments";
 import { useCreateComment, useDeleteComment, useUpdateComment } from "@/hooks/useCommentMutations";
+import { useCommentReaction } from "@/hooks/useCommentReaction";
 import type { Comment } from "@/lib/comments/types";
 
 vi.mock("@/hooks/useCurrentUser");
 vi.mock("@/hooks/useArticleComments");
 vi.mock("@/hooks/useCommentMutations");
+vi.mock("@/hooks/useCommentReaction");
 
 const mockedUseCurrentUser = vi.mocked(useCurrentUser);
 const mockedMarkPendingLoginCheck = vi.mocked(markPendingLoginCheck);
@@ -16,6 +18,7 @@ const mockedUseArticleComments = vi.mocked(useArticleComments);
 const mockedUseCreateComment = vi.mocked(useCreateComment);
 const mockedUseUpdateComment = vi.mocked(useUpdateComment);
 const mockedUseDeleteComment = vi.mocked(useDeleteComment);
+const mockedUseCommentReaction = vi.mocked(useCommentReaction);
 
 const loginUrl = vi.fn((returnTo: string) => `http://localhost:9999/login?returnTo=${returnTo}`);
 
@@ -52,6 +55,9 @@ function comment(overrides: Partial<Comment> = {}): Comment {
     updatedAt: "2026-01-01T12:00:00.000Z",
     deletedAt: null,
     replies: [],
+    likes: 0,
+    dislikes: 0,
+    userReaction: null,
     ...overrides,
   };
 }
@@ -63,6 +69,12 @@ describe("ArticleComments", () => {
     mockedUseCreateComment.mockReturnValue(baseMutation<ReturnType<typeof useCreateComment>>());
     mockedUseUpdateComment.mockReturnValue(baseMutation<ReturnType<typeof useUpdateComment>>());
     mockedUseDeleteComment.mockReturnValue(baseMutation<ReturnType<typeof useDeleteComment>>());
+    mockedUseCommentReaction.mockReturnValue({
+      react: vi.fn(),
+      remove: vi.fn(),
+      isReacting: false,
+      reactionError: null,
+    });
   });
 
   it("renders the empty state when there are no comments", () => {

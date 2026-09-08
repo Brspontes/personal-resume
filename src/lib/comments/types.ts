@@ -1,3 +1,5 @@
+import type { ReactionType } from "@/lib/reactions/types";
+
 export interface CommentAuthor {
   id: string;
   name: string;
@@ -13,4 +15,7 @@ export interface Comment {
   updatedAt: string;
   deletedAt: string | null;
   replies: Comment[];
+  likes: number;
+  dislikes: number;
+  userReaction: ReactionType | null;
 }

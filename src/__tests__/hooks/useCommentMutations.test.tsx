@@ -45,6 +45,9 @@ describe("useCreateComment", () => {
       updatedAt: "2026-01-01T00:00:00.000Z",
       deletedAt: null,
       replies: [],
+      likes: 0,
+      dislikes: 0,
+      userReaction: null,
     });
     const { result, invalidateSpy } = renderWithClient(() => useCreateComment("article-1"));
 
@@ -76,6 +79,9 @@ describe("useUpdateComment", () => {
       updatedAt: "2026-01-01T00:00:00.000Z",
       deletedAt: null,
       replies: [],
+      likes: 0,
+      dislikes: 0,
+      userReaction: null,
     });
     const { result, invalidateSpy } = renderWithClient(() => useUpdateComment("article-1"));
 
