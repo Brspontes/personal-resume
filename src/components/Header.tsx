@@ -10,8 +10,8 @@ const NAV_LINKS: { label: string; href: string; kind: "hash" | "route" }[] = [
   { label: "Habilidades", href: "#skills", kind: "hash" },
   { label: "Educação", href: "#education", kind: "hash" },
   { label: "Certificações", href: "#certifications", kind: "hash" },
-  { label: "Contato", href: "#contact", kind: "hash" },
   { label: "Artigos", href: "/articles", kind: "route" },
+  { label: "Contato", href: "#contact", kind: "hash" },
 ];
 
 export default function Header() {
